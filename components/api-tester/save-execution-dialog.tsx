@@ -23,12 +23,14 @@ interface SaveExecutionDialogProps {
   request: ApiRequest;
   response: ApiResponse | null;
   disabled?: boolean;
+  onSaved?: (execution: SavedExecution) => void;
 }
 
 export function SaveExecutionDialog({
   request,
   response,
   disabled,
+  onSaved,
 }: SaveExecutionDialogProps) {
   const [open, setOpen] = React.useState(false);
   const [name, setName] = React.useState("");
@@ -65,15 +67,20 @@ export function SaveExecutionDialog({
         response_size: response?.size || null,
       };
 
-      const { error } = await supabase
+      const { data, error } = await supabase
         .from("api_executions")
         .insert([execution])
-        .select();
+        .select()
+        .single();
 
       if (error) {
         console.error("Supabase error:", error);
         toast.error(`Failed to save: ${error.message}`);
         return;
+      }
+
+      if (data && onSaved) {
+        onSaved(data as SavedExecution);
       }
 
       toast.success("Execution saved successfully!");

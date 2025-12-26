@@ -140,10 +140,13 @@ export function ApiTester() {
     loadHistory();
   }, []);
 
-  // Save history to localStorage
+  // Save only local history (non-saved items) to localStorage
   React.useEffect(() => {
-    if (history.length > 0) {
-      localStorage.setItem("api-tester-history", JSON.stringify(history));
+    const localHistory = history.filter((item) => !item.isSaved);
+    if (localHistory.length > 0) {
+      localStorage.setItem("api-tester-history", JSON.stringify(localHistory));
+    } else {
+      localStorage.removeItem("api-tester-history");
     }
   }, [history]);
 
@@ -248,6 +251,11 @@ export function ApiTester() {
             }}
             response={response}
             disabled={isLoading}
+            onSaved={async (savedItem) => {
+              // Add the newly saved item to history
+              const historyItem = convertToHistoryItem(savedItem);
+              setHistory((prev) => [historyItem, ...prev]);
+            }}
           />
           <ThemeSwitcher />
         </div>
