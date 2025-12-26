@@ -1,5 +1,5 @@
-import { ComponentExample } from "@/components/component-example";
+import { ApiTester } from "@/components/api-tester";
 
 export default function Page() {
-return <ComponentExample />;
+  return <ApiTester />;
 }
