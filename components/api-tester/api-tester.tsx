@@ -20,6 +20,8 @@ import {
 } from "@/lib/api-utils";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { ApiIcon } from "@hugeicons/core-free-icons";
+import { ThemeSwitcher } from "@/components/theme-switcher";
+import { SaveExecutionDialog } from "./save-execution-dialog";
 
 export function ApiTester() {
   // Request state
@@ -116,10 +118,26 @@ export function ApiTester() {
   return (
     <div className="h-screen flex flex-col bg-background">
       {/* Header */}
-      <header className="flex items-center gap-3 px-6 py-4 border-b border-border">
+      <header className="flex items-center justify-between gap-3 px-6 py-4 border-b border-border">
         <div className="flex items-center gap-2">
           <HugeiconsIcon icon={ApiIcon} size={24} className="text-primary" />
           <h1 className="text-lg font-semibold">API Tester</h1>
+        </div>
+        <div className="flex items-center gap-2">
+          <SaveExecutionDialog
+            request={{
+              id: generateId(),
+              method,
+              url,
+              headers,
+              params,
+              body,
+              timestamp: new Date(),
+            }}
+            response={response}
+            disabled={isLoading}
+          />
+          <ThemeSwitcher />
         </div>
       </header>
 
