@@ -9,6 +9,7 @@ import { Delete02Icon, Clock01Icon } from "@hugeicons/core-free-icons";
 import { HistoryItem } from "@/lib/types";
 import { getMethodColor } from "@/lib/api-utils";
 import { cn } from "@/lib/utils";
+import { BookmarkIcon } from "@hugeicons/core-free-icons";
 
 interface HistoryPanelProps {
   history: HistoryItem[];
@@ -78,8 +79,20 @@ export function HistoryPanel({
                 {item.request.method}
               </Badge>
               <div className="flex-1 min-w-0">
-                <div className="text-xs truncate" title={item.request.url}>
-                  {truncateUrl(item.request.url)}
+                <div className="flex items-center gap-1.5">
+                  {item.isSaved && (
+                    <HugeiconsIcon
+                      icon={BookmarkIcon}
+                      size={12}
+                      className="text-primary flex-shrink-0"
+                    />
+                  )}
+                  <div
+                    className="text-xs truncate"
+                    title={item.name || item.request.url}
+                  >
+                    {item.name || truncateUrl(item.request.url)}
+                  </div>
                 </div>
                 <div className="flex items-center gap-2 mt-0.5">
                   <span className="text-[10px] text-muted-foreground">

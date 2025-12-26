@@ -31,4 +31,6 @@ export interface HistoryItem {
   request: ApiRequest;
   response: ApiResponse | null;
   timestamp: Date;
+  name?: string; // Optional name for saved executions
+  isSaved?: boolean; // Flag to indicate if it's from Supabase
 }
