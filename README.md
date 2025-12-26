@@ -24,6 +24,10 @@ A powerful and modern API testing tool built with Next.js 16, TypeScript, and sh
   - Copy to clipboard functionality
 - 📜 **Request History** - Automatic saving to localStorage (last 50 requests)
 - 💾 **Persistent Storage** - Save executions to Supabase database
+  - View saved executions in history panel with bookmark icons
+  - Named executions for easy identification
+  - Separate management of local vs. saved history
+  - Delete saved executions from database
 - 🌓 **Dark/Light Mode** - Theme switcher with system detection
 - ⚡ **Real-time Updates** - Fast refresh and hot module replacement
 
@@ -143,20 +147,32 @@ api_testing_app/
 
 ### History Management
 
-- Automatic saving of last 50 requests
-- Click any history item to restore it
-- View method, URL, timestamp, and status
-- Delete individual items or clear all history
-- Persisted in localStorage
+- **Local History:**
+  - Automatic saving of last 50 requests to localStorage
+  - Click any history item to restore it
+  - View method, URL, timestamp, and status
+  - Clear local history without affecting saved executions
+- **Saved Executions (with Supabase):**
+  - Saved items display with bookmark icon (🔖)
+  - Show custom name instead of URL
+  - Load automatically on app start
+  - Delete individual saved executions (removes from database)
+  - Persist across devices and browsers
 
 ### Saved Executions (with Supabase)
 
-- Save requests with custom names
+- Save requests with custom names for easy identification
 - Store complete request and response data
-- Database includes:
+- **Database includes:**
   - Request details (method, URL, headers, params, body)
   - Response details (status, headers, body, time, size)
   - Timestamps (created_at, updated_at)
+- **History Panel Integration:**
+  - Saved executions appear in history with bookmark icon
+  - Distinguish between local temporary history and saved executions
+  - Load saved executions automatically on app start
+  - Click to restore any saved execution
+  - Delete from both UI and database
 
 ## 🔧 Available Scripts
 
@@ -202,19 +218,41 @@ npm run lint     # Run ESLint
 
 1. Send a request
 2. Click "Save" button in header
-3. Enter a name for the execution
+3. Enter a name for the execution (e.g., "Get User Profile")
 4. Click "Save"
+5. The execution appears in history with a bookmark icon (🔖)
+
+### Managing History
+
+**Viewing History:**
+
+- Local requests show URL only
+- Saved executions show bookmark icon + custom name
+- Click any item to restore the request
+
+**Clearing History:**
+
+- "Clear" button removes only local history
+- Saved executions remain in the history panel
+- Delete individual items using the trash icon
+
+**Deleting Saved Executions:**
+
+- Click trash icon on a bookmarked item
+- Removes from both UI and Supabase database
 
 ## 🌟 Key Features
 
 - ✅ Clean and intuitive interface
 - ✅ Real-time response with loading states
-- ✅ Automatic request history
+- ✅ Automatic request history (local + cloud)
+- ✅ Visual distinction between local and saved executions
 - ✅ Dark/light theme with system detection
 - ✅ Keyboard shortcuts (Enter to send/save)
 - ✅ Mobile responsive design
 - ✅ No external dependencies for core functionality
 - ✅ Optional cloud storage with Supabase
+- ✅ Smart history management (separate local vs. saved)
 
 ## 🤝 Contributing
 
